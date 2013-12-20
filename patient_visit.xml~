@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp> 
+<data>
+     <record model="ir.ui.view" id="view_visit_type_search">
+        <field name="name">visit.type.search</field>
+        <field name="model">patient.visit.type</field>
+        <field name="arch" type="xml">
+            <search string="Visit Types">
+                <field name="id" string="Id" />
+                <field name="name" string="Visit Type"/>
+                <field name="description" string="Descritpion"/>
+            </search>
+        </field>
+    </record>
+ 
+
+    <!-- visit Type Form View -->
+        <record model="ir.ui.view" id="view_visit_type_form">
+            <field name="name">visit.type.form</field>
+            <field name="model">patient.visit.type</field>
+            <field name="arch" type="xml">
+                <form string="Type of Patient Visits" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="date_created" />
+                       <button name="synchronizeVtypes" string="Synchronize Visit Types" type="object"/>
+                        
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- visit Type Tree View -->
+        <record model="ir.ui.view" id="view_visit_type_tree">
+            <field name="name">visit.type.tree</field>
+            <field name="model">patient.visit.type</field>
+            <field name="field_parent"></field>
+            <field name="arch" type="xml">
+                <tree string="Type of patient visits">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="for_synchronization"/>
+                    
+                </tree>
+            </field>
+        </record>
+
+        <!-- visit Type Action -->
+
+     <record model="ir.actions.act_window" id="action_visit_type">
+        <field name="name">VisitTypes</field>
+        <field name="res_model">patient.visit.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_visit_type_search"/>
+    </record>
+     
+    
+    <record model="ir.ui.view" id="view_patient_visit_search">
+        <field name="name">patient.visit.search</field>
+        <field name="model">patient.visit</field>
+        <field name="arch" type="xml">
+            <search string="Visits">
+                <field name="visit_ref" />
+                <field name="patient" />
+                <field name="date_of_visit"/>
+                <field name="visit_type" /> 
+                <field name="visit_notes" />   
+            </search>
+        </field>
+    </record>
+
+    <!-- patient visit Form View -->
+        <record model="ir.ui.view" id="view_patient_visit_form">
+            <field name="name">patient.visit.form</field>
+            <field name="model">patient.visit</field>
+            <field name="arch" type="xml">
+               <form string="Patient Visits" version="7.0" edit="false">
+                <sheet>
+                    <group>
+                      <group> 
+                        <field name="visit_ref" />
+		        <field name="patient" />
+                       </group>
+                       <group>
+		        <field name="date_of_visit"/>
+		        <field name="visit_type" /> 
+                       </group>
+                      <group>
+		        <field name="visit_notes"/>
+                        <button name="synchronizeVisits" string="Synchronize Visits" type="object"/>
+		      </group>
+                     </group>
+                  </sheet> 
+                </form>
+            </field>
+        </record>
+
+        <!-- patient visit Type Tree View -->
+        <record model="ir.ui.view" id="view_patient_visit_tree">
+            <field name="name">patient.visit.tree</field>
+            <field name="model">patient.visit</field>
+            <field name="field_parent"></field>
+            <field name="arch" type="xml">
+                <tree string="Patient visits">
+                    <field name="visit_ref" />
+		    <field name="patient" />
+                    <field name="date_of_visit"/>
+		    <field name="visit_type" /> 
+                    
+                </tree>
+            </field>
+        </record>
+
+        <!-- patient visit Action -->
+
+     <record model="ir.actions.act_window" id="action_patient_visit">
+        <field name="name">Visits</field>
+        <field name="res_model">patient.visit</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_patient_visit_search"/>
+    </record>
+    
+<menuitem name="Visits" icon="terp-project" id="patient_visits" action="action_visit_type" parent="openmrs_config.patient_menu" groups="base.group_system" sequence="2"/>
+<menuitem name="All Visits" icon="terp-project" id="patient_all_visits" action="action_patient_visit" parent="patient_visits" groups="base.group_system" sequence="1"/>
+<menuitem name="Todays Visits" icon="terp-project" id="patient_today_visits" action="action_patient_visit" parent="patient_visits" groups="base.group_system" sequence="2"/>
+
+
+<menuitem name="Patient Visit Types" parent="openmrs_connect.connect_config" id="patient_visit_types" action="action_visit_type" sequence="2" /> 
+
+   
+</data>
+</openerp>
